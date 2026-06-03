@@ -1,2 +1,0 @@
-SensorParameter                        |Healthy (Start)    |High Risk (End)
-DirectionS11HPC Outlet Static Pressure~|    47.47 psia     |> 48.00+ psia📈 IncreasingS12Fuel Flow / P30 Ratio   |~521.66            |< 519.50 - 520.📉 DecreasingS13Corrected Fan Speed |~2388.02 rpm        |> 2388.35+ rpm📈 IncreasingS15Bypass Ratio        |~8.41              |> 8.55 - 8.60+

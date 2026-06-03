@@ -1,79 +1,86 @@
-Aircraft Engine Health Prediction Algorithm
+#Aircraft Engine Health Prediction Algorithm
 
 1. Start
-
 2. Input
-Read engine ID, location, and sensor values
-
+    Read engine ID, location, sensor values
 3. Store Data
-Save sensor values in history_vault
-
+    Save sensors in history
 4. Preprocess
-Normalize data using scaler
-
+    Normalize using scaler
 5. Current Prediction
-Pass input through quantum circuit
-Get score and apply smoothing
-
-6. Determine Current Status
-Classify as High / Moderate / Healthy
-
+	Quantum model → score → apply smoothing
+6. Current Status
+	Classify: High / Moderate / Healthy
 7. Future Prediction
-Take last 3 values (sliding window)
-Predict using LSTM model
-Apply smoothing
-Adjust future status based on rules
-
-8. Trend Detection
-Compare last 3 scores → Increasing / Decreasing / Stable
-
-9. Priority Ranking
-Store score in engine_scores
-Rank = number of engines with higher score + 1
-
-10. Nearest Hangar
-Use R-tree to find closest airport
-
-11. AI Decision
-Generate decision using Gemini AI
-
+	Last 3 values → LSTM → smoothing → apply rules
+8. Trend
+	Check last 3 scores → Increasing / Decreasing / Stable
+9. Ranking
+	Store score → compute rank
+10. Nearest Airport
+	Find using R-tree
+11. Decision
+	Generate using AI
 12. Output
-Return status, score, trend, future result, rank, hangar, decision
-
+	Return all results
 13. End
 
-Overall Time Complexity: O(n)
-Overall Space Complexity: O(n)
+Overall Time Complexity: O(N)
+Overall Space Complexity: O(N)
 
-R-Tree Algorithm
+#R-Tree Algorithm
 
 1. Start
-
-2. Initialize
-Create R-tree index
-
-3. Insert Data
-For each location:
-	Insert (lat, lon, lat, lon)
-
-4. Input Query
-Take current location (lat, lon)
-
-5. Search
-Start from root
-Select nearest bounding rectangles
-Move to child nodes
-Skip far nodes (pruning)
-
-6. Leaf Node
-Compare actual distances
-
-7. Select Result
-Return nearest location
-
+2. Input
+    Set of spatial objects (latitude, longitude)
+3. Initialize
+    Create empty R-tree index
+4. Insert Data
+    Insert (lat, lon) as rectangle into R-tree
+5. Query (Nearest Search)
+    Input query point (lat, lon)
+    Traverse tree to find nearest object
+6. Selection
+    Compare distances
+    Choose minimum distance object
+7. Output
+    Return nearest location (airport/hangar)
 8. End
 
-Overall Time Complexity: O(logn)
-Overall Space Complexity: O(n)
+Overall Time Complexity: 1.Insertion: O(log N)
+                         2.Search: O(log N)
+Overall Space Complexity: O(N)
 
 R-Tree is used to efficiently find the nearest airport (hangar) based on engine location.
+
+#Double-Ended Priority Queue (DEPQ) Algorithm
+
+1. Start
+2. Input
+    Set of items with scores
+3. Initialize
+    Create two heaps:
+    Min-heap (stores smallest scores)
+    Max-heap (stores largest scores)
+    Shared active flags for lazy deletion
+4. Insertion
+    Add item to both heaps
+    Mark as active
+5. Get Maximum (Highest Risk)
+    Clean max-heap (remove inactive items)
+    Return maximum score item
+6. Get Minimum (Healthiest)
+    Clean min-heap (remove inactive items)
+    Return minimum score item
+7. Update Score
+    Mark old entry as inactive
+    Insert new score
+8. Output
+    Return required result
+9. End
+
+Overall Time Complexity: 1.Insertion: O(log N)
+                         2.Get Max: O(log N)
+                         3.Get Min: O(log N)
+                         4.Update: O(log N)
+Overall Space Complexity: O(N)

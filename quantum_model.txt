@@ -1,0 +1,158 @@
+⚛ 1. Model Type
+
+Your model is a:
+
+👉 Variational Quantum Classifier (VQC)
+
+It is a hybrid model combining:
+
+Quantum circuit (feature processing)
+Classical optimizer (training)
+🧠 2. Problem You Are Solving
+
+👉 Predict aircraft engine health
+
+Using:
+
+NASA CMAPSS dataset
+Sensor values → predict failure risk
+
+Output:
+
++1  → High Failure Risk  
+-1  → Healthy Engine
+📊 3. Input Features
+
+You selected 4 important sensors:
+
+s11, s12, s13, s15
+
+Why only 4?
+
+Quantum systems have limited qubits
+You used 4 qubits → 4 features
+⚙ 4. Data Preprocessing
+
+You used:
+
+👉 MinMaxScaler
+
+Purpose:
+
+Normalize data between 0 and 1
+Required for stable quantum rotations
+⚛ 5. Quantum Circuit Design
+Qubits:
+4 qubits
+Encoding:
+
+👉 Angle Encoding
+
+qml.RY(inputs[i] * π)
+
+Meaning:
+
+Classical data → converted into quantum rotations
+Variational Layers:
+
+You used 2 layers:
+
+1. Entanglement
+qml.CNOT
+
+Purpose:
+
+Create correlation between qubits
+Capture complex patterns
+2. Trainable Gates
+qml.Rot(weights)
+
+Purpose:
+
+Learn patterns from data
+🔁 6. Circuit Flow
+Input Data
+   ↓
+Angle Encoding (RY gates)
+   ↓
+Entanglement (CNOT)
+   ↓
+Trainable Rotations (Rot)
+   ↓
+Measurement (PauliZ)
+   ↓
+Prediction Output
+📈 7. Output
+qml.expval(qml.PauliZ(0))
+
+Output range:
+
+-1 to +1
+
+Interpretation:
+
+> 0 → Failure Risk  
+< 0 → Healthy
+📉 8. Loss Function
+
+👉 Mean Squared Error (MSE)
+
+loss = mean((y_true - y_pred)^2)
+
+Purpose:
+
+Minimize prediction error
+🔧 9. Optimization
+
+👉 Adam Optimizer
+
+qml.AdamOptimizer
+
+Why:
+
+Fast convergence
+Works well for quantum circuits
+🧪 10. Training Details
+Training Samples: 500  
+Epochs: 15  
+Weights Shape: (2, 4, 3)
+
+Explanation:
+
+2 → layers
+4 → qubits
+3 → rotation parameters
+💾 11. Model Output Files
+quantum_weights.pkl
+scaler.pkl
+
+Used in:
+👉 Flask web app for real-time prediction
+
+🚀 12. Advantages of Your Quantum Model
+✅ Handles complex patterns
+
+Quantum entanglement captures relationships classical ML may miss
+
+✅ Works with small data
+
+Useful when data is limited
+
+✅ Hybrid power
+
+Combines:
+
+Quantum feature mapping
+Classical optimization
+⚠️ 13. Limitations
+❌ Small qubit count
+
+Only 4 features used
+
+❌ Simulation cost
+
+Quantum simulation is slow
+
+❌ Noise (real hardware)
+
+Real quantum devices are unstable
